@@ -1,7 +1,8 @@
 const functions = require('firebase-functions');
+const qr = require('qr-image');
 
-exports.addMessage = functions.https.onRequest(	async (req,res) => {
+exports.stringtoCode = functions.https.onRequest( async(req, res) => {
 	const text = req.query.text;
-	const modifiedText = text.toUpperCase();
-	res.json({'result':`${text} and ${modifiedText}`});
+	const qr_image = qr.imageSync(text,{type:'png'});
+	res.json({'svg':qr_image});
 });
